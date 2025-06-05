@@ -77,61 +77,7 @@
 
         // Simulate loading data from a JSON file
         // startTime now represents a duration offset from GLOBAL_EVENT_START_TIME
-        const scheduleData = [
-            { "id": "sch001", "userName": "cengizhan", "startTime": "00:00:45" }, // 45 seconds after global start
-            { "id": "sch002", "userName": "arigato", "startTime": "00:01:30" },
-            { "id": "sch003", "userName": "arigato", "startTime": "00:02:15" },
-            { "id": "sch004", "userName": "arda", "startTime": "00:03:00" },
-            { "id": "sch005", "userName": "criticalfail", "startTime": "00:03:45" },
-            { "id": "sch006", "userName": "criticalfail", "startTime": "00:04:30" },
-            { "id": "sch007", "userName": "arda", "startTime": "00:05:15" },
-            { "id": "sch008", "userName": "arda", "startTime": "00:06:00" },
-            { "id": "sch009", "userName": "frooth", "startTime": "00:06:45" },
-            { "id": "sch010", "userName": "frooth", "startTime": "00:07:30" },
-            { "id": "sch011", "userName": "cengizhan", "startTime": "00:08:15" },
-            { "id": "sch012", "userName": "cengizhan", "startTime": "00:09:00" },
-            { "id": "sch013", "userName": "arigato", "startTime": "00:09:45" },
-            { "id": "sch014", "userName": "arigato", "startTime": "00:10:30" },
-            { "id": "sch015", "userName": "arigato", "startTime": "00:11:15" },
-            { "id": "sch016", "userName": "criticalfail", "startTime": "00:12:00" },
-            { "id": "sch017", "userName": "criticalfail", "startTime": "00:12:45" },
-            { "id": "sch018", "userName": "arda", "startTime": "00:13:30" },
-            { "id": "sch019", "userName": "arda", "startTime": "00:14:15" },
-            { "id": "sch020", "userName": "frooth", "startTime": "00:15:00" },
-            { "id": "sch021", "userName": "frooth", "startTime": "00:15:45" },
-            { "id": "sch022", "userName": "cengizhan", "startTime": "00:16:30" },
-            { "id": "sch023", "userName": "cengizhan", "startTime": "00:17:15" },
-            { "id": "sch024", "userName": "arigato", "startTime": "00:18:00" },
-            { "id": "sch025", "userName": "arigato", "startTime": "00:18:45" },
-            { "id": "sch026", "userName": "arigato", "startTime": "00:19:30" },
-            { "id": "sch027", "userName": "criticalfail", "startTime": "00:20:15" },
-            { "id": "sch028", "userName": "criticalfail", "startTime": "00:21:00" },
-            { "id": "sch029", "userName": "arda", "startTime": "00:21:45" },
-            { "id": "sch030", "userName": "arda", "startTime": "00:22:30" },
-            { "id": "sch031", "userName": "frooth", "startTime": "00:23:15" },
-            { "id": "sch032", "userName": "frooth", "startTime": "00:24:00" },
-            { "id": "sch033", "userName": "cengizhan", "startTime": "00:24:45" },
-            { "id": "sch034", "userName": "cengizhan", "startTime": "00:25:30" },
-            { "id": "sch035", "userName": "arigato", "startTime": "00:26:15" },
-            { "id": "sch036", "userName": "arigato", "startTime": "00:27:00" },
-            { "id": "sch037", "userName": "arigato", "startTime": "00:27:45" },
-            { "id": "sch038", "userName": "criticalfail", "startTime": "00:28:30" },
-            { "id": "sch039", "userName": "criticalfail", "startTime": "00:29:15" },
-            { "id": "sch040", "userName": "arda", "startTime": "00:30:00" },
-            { "id": "sch041", "userName": "arda", "startTime": "00:30:45" },
-            { "id": "sch042", "userName": "frooth", "startTime": "00:31:30" },
-            { "id": "sch043", "userName": "frooth", "startTime": "00:32:15" },
-            { "id": "sch044", "userName": "cengizhan", "startTime": "00:33:00" },
-            { "id": "sch045", "userName": "cengizhan", "startTime": "00:33:45" },
-            { "id": "sch046", "userName": "arigato", "startTime": "00:34:30" },
-            { "id": "sch047", "userName": "arigato", "startTime": "00:35:15" },
-            { "id": "sch048", "userName": "arigato", "startTime": "00:36:00" },
-            { "id": "sch049", "userName": "criticalfail", "startTime": "00:36:45" },
-            { "id": "sch050", "userName": "criticalfail", "startTime": "00:37:30" },
-            { "id": "sch051", "userName": "frooth", "startTime": "00:38:15" },
-            { "id": "sch052", "userName": "frooth", "startTime": "00:39:00" },
-            { "id": "sch053", "userName": "cengizhan", "startTime": "00:39:45" }
-        ];
+        let scheduleData = [];
 
         const scheduleListDiv = document.getElementById('scheduleList');
         const filterInput = document.getElementById('filterInput');
@@ -147,6 +93,24 @@
             const seconds = String(now.getSeconds()).padStart(2, '0');
             currentTimeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
         }
+
+function loadScheduleData() {
+    fetch('rift-data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to load rift-data.json');
+            }
+            return response.json();
+        })
+        .then(data => {
+            scheduleData = data;
+            renderSchedules(scheduleData);
+            updateAllCountdowns();
+        })
+        .catch(error => {
+            scheduleListDiv.innerHTML = `<p class="text-red-600 text-center">Error loading schedule data: ${error.message}</p>`;
+        });
+}
 
         /**
          * Calculates the remaining time until a schedule item's specific start.
@@ -267,7 +231,8 @@
 
         // Initial render when the page loads
         window.onload = function() {
-            renderSchedules(scheduleData);
+            loadScheduleData();
+            setInterval(renderSchedules(scheduleData),1000);
             // Update countdowns and current time every second
             setInterval(updateAllCountdowns, 1000);
             setInterval(updateCurrentTimeDisplay, 1000);
