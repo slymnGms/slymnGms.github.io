@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,35 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Font - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+
         /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 10px;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 10px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
     </style>
 </head>
+
 <body class="bg-gradient-to-br from-purple-50 to-pink-100 min-h-screen flex flex-col items-center p-4 sm:p-6">
 
     <div class="fixed top-0 left-0 w-full bg-white shadow-md z-40 p-4 flex justify-center items-center rounded-b-xl">
@@ -51,12 +58,8 @@
             <label for="filterInput" class="block text-sm font-medium text-gray-700 mb-1">
                 Filter by User Name:
             </label>
-            <input
-                type="text"
-                id="filterInput"
-                placeholder="e.g., cengizhan, arigato"
-                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-base"
-            >
+            <input type="text" id="filterInput" placeholder="e.g., cengizhan, arigato"
+                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-base">
         </div>
 
         <div id="scheduleList" class="space-y-4 max-h-96 overflow-y-auto pr-2">
@@ -67,7 +70,7 @@
 
     <script>
         // Define the global event start time (fixed for this static viewer)
-        const GLOBAL_EVENT_START_TIME = "22:00:00"; // HH:MM:SS format
+        const GLOBAL_EVENT_START_TIME = "23:00:00"; // HH:MM:SS format
         const globalStartTimeDisplay = document.getElementById('globalStartTimeDisplay');
         const currentTimeDisplay = document.getElementById('currentTimeDisplay');
 
@@ -94,23 +97,23 @@
             currentTimeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
         }
 
-function loadScheduleData() {
-    fetch('rift-data.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to load rift-data.json');
-            }
-            return response.json();
-        })
-        .then(data => {
-            scheduleData = data;
-            renderSchedules(scheduleData);
-            updateAllCountdowns();
-        })
-        .catch(error => {
-            scheduleListDiv.innerHTML = `<p class="text-red-600 text-center">Error loading schedule data: ${error.message}</p>`;
-        });
-}
+        function loadScheduleData() {
+            fetch('rift-data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load rift-data.json');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    scheduleData = data;
+                    renderSchedules(scheduleData);
+                    updateAllCountdowns();
+                })
+                .catch(error => {
+                    scheduleListDiv.innerHTML = `<p class="text-red-600 text-center">Error loading schedule data: ${error.message}</p>`;
+                });
+        }
 
         /**
          * Calculates the remaining time until a schedule item's specific start.
@@ -137,9 +140,9 @@ function loadScheduleData() {
 
             // 4. Calculate the final target event time by adding the offset duration
             let targetEventTimeMs = globalEventBase.getTime() +
-                                    (offsetHours * 3600 * 1000) +
-                                    (offsetMinutes * 60 * 1000) +
-                                    (offsetSeconds * 1000);
+                (offsetHours * 3600 * 1000) +
+                (offsetMinutes * 60 * 1000) +
+                (offsetSeconds * 1000);
 
             const targetDateTime = new Date(targetEventTimeMs);
 
@@ -180,6 +183,12 @@ function loadScheduleData() {
                 scheduleItem.setAttribute('data-id', schedule.id); // Set data-id for easy lookup
 
                 // HTML structure for the schedule item (no editable inputs)
+                var remainingTime = calculateRemainingTime(schedule.startTime);
+                if (remainingTime.startsWith('00:00') || remainingTime.startsWith('1d')) {
+                    scheduleItem.classList.add('bg-green-50', 'border-green-200');
+                } else {
+                    scheduleItem.classList.add('bg-red-50');
+                }
                 scheduleItem.innerHTML = `
                     <div class="mb-2 sm:mb-0">
                         <p class="text-lg font-semibold text-blue-800">
@@ -212,7 +221,12 @@ function loadScheduleData() {
                 const countdownSpan = document.getElementById(`countdown-${id}`);
                 const schedule = scheduleData.find(s => s.id === id); // Get the current schedule data
                 if (countdownSpan && schedule) {
-                    countdownSpan.textContent = calculateRemainingTime(schedule.startTime);
+                    var remainingTime = calculateRemainingTime(schedule.startTime);
+                    var textRemaining = remainingTime;
+                    if (remainingTime.startsWith('1d')) textRemaining = remainingTime.substring(2);
+                    countdownSpan.textContent = textRemaining;
+                    if (remainingTime.startsWith('00:00') || remainingTime.startsWith('1d')) item.classList.add('bg-green-50', 'border-green-200');
+                    else item.classList.add('bg-red-50');
                 }
             });
         }
@@ -230,9 +244,9 @@ function loadScheduleData() {
         }
 
         // Initial render when the page loads
-        window.onload = function() {
+        window.onload = function () {
             loadScheduleData();
-            setInterval(renderSchedules(scheduleData),1000);
+            setInterval(renderSchedules(scheduleData), 1000);
             // Update countdowns and current time every second
             setInterval(updateAllCountdowns, 1000);
             setInterval(updateCurrentTimeDisplay, 1000);
@@ -244,4 +258,5 @@ function loadScheduleData() {
     </script>
 
 </body>
+
 </html>
