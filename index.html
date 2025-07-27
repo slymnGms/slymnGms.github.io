@@ -1,14 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>My GitHub Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Süleyman GMS - Terminal Portfolio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for the Tron terminal look */
+    body {
+      background-color: #000000;
+      /* Deep black background */
+      font-family: 'Inter', monospace;
+      /* Monospace font for terminal feel */
+      color: #00eaff;
+      /* Tron blue/cyan text */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .terminal-container {
+      background-color: #0a1a2a;
+      /* Dark blue for terminal body */
+      border-radius: 0.75rem;
+      /* Rounded corners */
+      box-shadow: 0 0 20px rgba(0, 234, 255, 0.4), 0 0 10px rgba(0, 234, 255, 0.2);
+      /* Tron-style blue glow */
+      border: 1px solid #00eaff;
+      /* Thin blue border */
+      width: 100%;
+      max-width: 800px;
+      /* Max width for readability */
+      height: 70vh;
+      /* Fixed height for terminal window */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background-color: #000a14;
+      /* Even darker blue for header */
+      padding: 0.5rem 1rem;
+      border-top-left-radius: 0.75rem;
+      border-top-right-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #00eaff;
+      /* Tron blue/cyan */
+      font-size: 0.875rem;
+      /* text-sm */
+      border-bottom: 1px solid #00eaff;
+      /* Glowing border below header */
+    }
+
+    .terminal-header .dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 9999px;
+      /* Full rounded */
+      box-shadow: 0 0 5px rgba(0, 234, 255, 0.6);
+      /* Subtle glow for dots */
+    }
+
+    .terminal-header .red {
+      background-color: #ef4444;
+    }
+
+    /* Retain original dot colors for contrast */
+    .terminal-header .yellow {
+      background-color: #f59e0b;
+    }
+
+    .terminal-header .green {
+      background-color: #22c55e;
+    }
+
+    .terminal-output {
+      flex-grow: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      /* Scrollable output */
+      white-space: pre-wrap;
+      /* Preserve whitespace and wrap text */
+      word-break: break-word;
+      /* Break long words */
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #00eaff;
+      /* Tron blue/cyan for general output */
+      text-shadow: 0 0 5px rgba(0, 234, 255, 0.3);
+      /* Subtle text glow */
+    }
+
+    .terminal-output .prompt {
+      color: #00ffff;
+      /* Brighter Tron blue for prompt */
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      /* Stronger glow for prompt */
+    }
+
+    .terminal-output .command-output {
+      color: #00eaff;
+      /* Tron blue/cyan for command output */
+    }
+
+    .terminal-input-container {
+      display: flex;
+      padding: 1rem;
+      border-top: 1px solid #00eaff;
+      /* Glowing border above input */
+    }
+
+    .terminal-input-container .prompt {
+      color: #00ffff;
+      /* Brighter Tron blue for prompt */
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+      /* Prevent prompt from shrinking */
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+      /* Stronger glow for prompt */
+    }
+
+    .terminal-input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: #00eaff;
+      /* Tron blue/cyan text for input */
+      flex-grow: 1;
+      font-family: 'Inter', monospace;
+      font-size: 0.95rem;
+      text-shadow: 0 0 5px rgba(0, 234, 255, 0.3);
+      /* Subtle text glow */
+      caret-color: #00ffff;
+      /* Tron blue cursor */
+    }
+
+    /* Scrollbar styling for Tron theme */
+    .terminal-output::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .terminal-output::-webkit-scrollbar-track {
+      background: #0a1a2a;
+      /* Track color */
+    }
+
+    .terminal-output::-webkit-scrollbar-thumb {
+      background: #00eaff;
+      /* Thumb color - Tron blue */
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0, 234, 255, 0.6);
+      /* Glowing thumb */
+    }
+
+    .terminal-output::-webkit-scrollbar-thumb:hover {
+      background: #00ffff;
+      /* Brighter thumb on hover */
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+      /* Stronger glow on hover */
+    }
+
+    /* Tron-style specific text colors for commands */
+    .text-yellow-400 {
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+
+    /* Bright cyan for highlights */
+    .text-green-400 {
+      color: #00eaff;
+      text-shadow: 0 0 5px rgba(0, 234, 255, 0.5);
+    }
+
+    /* Cyan for titles */
+    .text-blue-400 {
+      color: #00c0ff;
+      text-shadow: 0 0 5px rgba(0, 192, 255, 0.5);
+    }
+
+    /* Slightly darker cyan for links/companies */
+  </style>
 </head>
+
 <body>
-  <h1>Welcome to My GitHub Page</h1>
-  <p>This is the main page.</p>
-  <nav>
-    <a href="about.html">About</a>
-  </nav>
+  <div class="terminal-container">
+    <div class="terminal-header">
+      <div class="dot red"></div>
+      <div class="dot yellow"></div>
+      <div class="dot green"></div>
+      <span>suleyman-gms@portfolio: ~</span>
+    </div>
+    <div id="terminalOutput" class="terminal-output">
+      <!-- Initial welcome messages will be added by JavaScript -->
+    </div>
+    <div class="terminal-input-container">
+      <span class="prompt">suleyman-gms@portfolio:~$</span>
+      <input type="text" id="terminalInput" class="terminal-input" autofocus>
+    </div>
+  </div>
+
+  <script>
+    // Data for the portfolio
+    const portfolioData = {
+      name: "Süleyman GMS", // Updated name
+      title: "Software Developer | Full Stack Developer | Backend Developer",
+      about: "A passionate and results-driven Software Developer with a strong focus on crafting clean, scalable, and efficient solutions. Experienced in full-stack and backend development, with a proven track record of solving complex problems and delivering high-quality software. Proficient in a wide range of technologies and dedicated to continuous learning and improvement.",
+      skills: [
+        "Python", "Django", "Flask", "FastAPI",
+        "Node.js", "Express.js",
+        "React.js", "Next.js",
+        "PostgreSQL", "MongoDB",
+        "Docker", "AWS", "Git",
+        "RESTful APIs", "Microservices", "Agile Methodologies",
+        "Problem Solving", "Clean Code", "Scalability", "System Design"
+      ],
+      experience: [
+        {
+          title: "Software Developer",
+          company: "Self-Employed",
+          duration: "Jan 2022 - Present",
+          description: "Developed and deployed various software solutions for clients, focusing on full-stack web applications and backend services. Managed project lifecycles from conception to deployment, ensuring high quality and client satisfaction."
+        },
+        {
+          title: "Software Developer",
+          company: "Freelance",
+          duration: "Jan 2019 - Jan 2022",
+          description: "Worked on diverse freelance projects, building custom software solutions for small businesses and individuals. Gained extensive experience in adapting to new technologies and client requirements."
+        }
+      ],
+      education: [
+        {
+          degree: "Bachelor's degree, Computer Engineering",
+          institution: "Istanbul Medipol University",
+          duration: "2018 - 2023"
+        }
+      ],
+      contact: {
+        email: "sulaiman.gms@example.com", // Placeholder email
+        linkedin: "https://www.linkedin.com/in/sulaiman-gms/",
+        github: "https://github.com/slymnGms"
+      },
+      projects: "You can find my projects on my GitHub profile: https://github.com/slymnGms"
+    };
+
+    const terminalOutput = document.getElementById('terminalOutput');
+    const terminalInput = document.getElementById('terminalInput');
+
+    // ASCII art for "Süleyman"
+    const suleymanAscii = `
+ ____               _                     _
+/ ___| _   _  ___  | | __  ___   _ __ ___| |__   __ _ _ __
+\\___ \\| | | |/ _ \\ | |/ / / _ \\ | '__/ __| '_ \\ / _\` | '__|
+ ___) | |_| | (_) ||   < | (_) || | | (__| | | | (_| | |
+|____/ \\__, |\\___/ |_|\\_\\ \\___/ |_|  \\___|_| |_|\\__,_|_|
+       |___/
+        `;
+
+    // Function to append output to the terminal
+    // The addPromptPrefix parameter controls whether the 'suleyman-gms@portfolio:~$' prompt is added.
+    // It should be true only for the echoed command, and false for the command's actual output.
+    function appendOutput(message, addPromptPrefix = false) {
+      const outputLine = document.createElement('div');
+      if (addPromptPrefix) {
+        // This branch is for echoing the user's typed command
+        outputLine.innerHTML = `<span class="prompt">suleyman-gms@portfolio:~$</span> <span class="command-output">${message}</span>`;
+      } else {
+        // This branch is for displaying the actual output of a command (like 'man' or 'cat')
+        outputLine.innerHTML = `<span class="command-output">${message}</span>`;
+      }
+      terminalOutput.appendChild(outputLine);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll to bottom
+    }
+
+    // Function to display initial welcome messages
+    function displayWelcomeMessage() {
+      const asciiArt = `
+███████╗██╗   ██╗██╗      █████╗ ███╗   ███╗ █████╗ ███╗   ███╗
+██╔════╝██║   ██║██║     ██╔══██╗████╗ ████║██╔══██╗████╗ ████║
+███████╗██║   ██║██║     ███████║██╔████╔██║███████║██╔████╔██║
+╚════██║██║   ██║██║     ██╔══██║██║╚██╔╝██║██╔══██║██║╚██╔╝██║
+███████║╚██████╔╝███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║██║
+╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
+            `;
+      // Using a specific Tron blue for the ASCII art
+      appendOutput(`<pre style="color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);">${asciiArt}</pre>`, false);
+      appendOutput("Welcome to Süleyman GMS's interactive terminal portfolio.", false); // Updated name
+      appendOutput("Type '<span class='text-yellow-400'>help</span>' to see available commands.", false);
+      appendOutput("", false); // Add an empty line for spacing
+    }
+
+
+    // Available commands
+    const commands = {
+      'help': () => {
+        appendOutput("Available commands:", false);
+        appendOutput("  <span class='text-yellow-400'>help</span>        - Displays this help message.", false);
+        appendOutput("  <span class='text-yellow-400'>about</span>       - Learn more about Süleyman GMS.", false); // Updated name
+        appendOutput("  <span class='text-yellow-400'>skills</span>      - Lists technical skills.", false);
+        appendOutput("  <span class='text-yellow-400'>experience</span>  - Shows work experience.", false);
+        appendOutput("  <span class='text-yellow-400'>education</span>   - Displays educational background.", false);
+        appendOutput("  <span class='text-yellow-400'>projects</span>    - Information about projects.", false);
+        appendOutput("  <span class='text-yellow-400'>contact</span>     - How to get in touch.", false);
+        appendOutput("  <span class='text-yellow-400'>github</span>      - Opens Süleyman's GitHub profile.", false); // Updated name
+        appendOutput("  <span class='text-yellow-400'>whoami</span>      - Displays current user information.", false);
+        appendOutput("  <span class='text-yellow-400'>ls</span>          - Lists conceptual 'files' (data).", false);
+        appendOutput("  <span class='text-yellow-400'>cat &lt;filename&gt;</span> - Displays content of a 'file' (e.g., <span class='text-yellow-400'>cat skills.json</span>).", false);
+        appendOutput("  <span class='text-yellow-400'>clear</span>       - Clears the terminal screen.", false);
+        appendOutput("  <span class='text-yellow-400'>easter</span>      - A hidden surprise!", false);
+      },
+      'about': () => {
+        appendOutput(portfolioData.about, false);
+      },
+      'skills': () => {
+        appendOutput("Skills:", false);
+        portfolioData.skills.forEach(skill => appendOutput(`  - ${skill}`, false));
+      },
+      'experience': () => {
+        appendOutput("Work Experience:", false);
+        portfolioData.experience.forEach(exp => {
+          appendOutput(`  <span class='text-green-400'>${exp.title}</span> at <span class='text-blue-400'>${exp.company}</span> (${exp.duration})`, false);
+          appendOutput(`    ${exp.description}`, false);
+        });
+      },
+      'education': () => {
+        appendOutput("Education:", false);
+        portfolioData.education.forEach(edu => {
+          appendOutput(`  <span class='text-green-400'>${edu.degree}</span> from <span class='text-blue-400'>${edu.institution}</span> (${edu.duration})`, false);
+        });
+      },
+      'projects': () => {
+        appendOutput(portfolioData.projects, false);
+      },
+      'contact': () => {
+        appendOutput("Contact Information:", false);
+        appendOutput(`  Email: <span class='text-blue-400'>${portfolioData.contact.email}</span>`, false);
+        appendOutput(`  LinkedIn: <span class='text-blue-400'>${portfolioData.contact.linkedin}</span>`, false);
+        appendOutput(`  GitHub: <span class='text-blue-400'>${portfolioData.contact.github}</span>`, false);
+      },
+      'github': () => {
+        appendOutput(`Opening GitHub profile: ${portfolioData.contact.github}`, false);
+        window.open(portfolioData.contact.github, '_blank');
+      },
+      'whoami': () => {
+        // Display ASCII art for Süleyman and then the title
+        appendOutput(`<pre style="color: #00ffff; text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);">${suleymanAscii}</pre>`, false);
+        appendOutput(`${portfolioData.title}`, false);
+      },
+      'ls': () => {
+        appendOutput("Available 'files':", false);
+        appendOutput("  about.txt", false);
+        appendOutput("  skills.json", false);
+        appendOutput("  experience.json", false);
+        appendOutput("  education.json", false);
+        appendOutput("  contact.txt", false);
+      },
+      'cat': (args) => {
+        const filename = args[0];
+        if (!filename) {
+          appendOutput("Usage: cat <filename>", false);
+          return;
+        }
+        switch (filename) {
+          case 'about.txt':
+            appendOutput(portfolioData.about, false);
+            break;
+          case 'skills.json':
+            appendOutput(JSON.stringify(portfolioData.skills, null, 2), false);
+            break;
+          case 'experience.json':
+            appendOutput(JSON.stringify(portfolioData.experience, null, 2), false);
+            break;
+          case 'education.json':
+            appendOutput(JSON.stringify(portfolioData.education, null, 2), false);
+            break;
+          case 'contact.txt':
+            appendOutput(`Email: ${portfolioData.contact.email}\nLinkedIn: ${portfolioData.contact.linkedin}\nGitHub: ${portfolioData.contact.github}`, false);
+            break;
+          default:
+            appendOutput(`cat: ${filename}: No such file or directory`, false);
+        }
+      },
+      'clear': () => {
+        terminalOutput.innerHTML = ''; // Clear all content
+        displayWelcomeMessage(); // Redisplay welcome message after clearing
+      },
+      'easter': () => {
+        appendOutput("███████╗██╗  ██╗███████╗████████╗███████╗██████╗ ", false);
+        appendOutput("██╔════╝██║  ██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗", false);
+        appendOutput("█████╗  ███████║███████╗   ██║   █████╗  ██████╔╝", false);
+        appendOutput("██╔══╝  ██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗", false);
+        appendOutput("██║     ██║  ██║███████║   ██║   ███████╗██║  ██║", false);
+        appendOutput("╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝", false);
+        appendOutput("You found the easter egg! Keep coding!", false);
+      }
+    };
+
+    // Handle input on Enter key press
+    terminalInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        const input = terminalInput.value.trim();
+        appendOutput(input, true); // Echo the command with the prompt
+        terminalInput.value = ''; // Clear input field
+
+        const parts = input.split(' ');
+        const command = parts[0].toLowerCase();
+        const args = parts.slice(1);
+
+        if (commands[command]) {
+          if (command === 'cat') {
+            commands[command](args);
+          } else {
+            commands[command]();
+          }
+        } else if (command) { // If command is not empty but not recognized
+          appendOutput(`Command not found: ${command}. Type '<span class='text-yellow-400'>help</span>' for a list of commands.`, false);
+        }
+        terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll again
+      }
+    });
+
+    // Focus on the input field when the page loads
+    window.onload = function () {
+      displayWelcomeMessage(); // Call the new function to display welcome messages
+      terminalInput.focus();
+    };
+
+    // Re-focus on input if user clicks anywhere else
+    document.addEventListener('click', function (e) {
+      if (!terminalInput.contains(e.target) && !terminalOutput.contains(e.target)) {
+        terminalInput.focus();
+      }
+    });
+  </script>
 </body>
+
 </html>
