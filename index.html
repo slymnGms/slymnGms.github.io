@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suleyman GMS - Terminal Portfolio</title>
+  <title>Suleyman GUMUS - Terminal Portfolio</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -366,13 +366,13 @@
       <div class="dot red"></div>
       <div class="dot yellow"></div>
       <div class="dot green"></div>
-      <span>suleyman-gms@portfolio: ~</span>
+      <span>suleyman-gumus@portfolio: ~</span>
     </div>
     <div id="terminalOutput" class="terminal-output">
       <!-- Initial welcome messages will be added by JavaScript -->
     </div>
     <div class="terminal-input-container">
-      <span class="prompt">suleyman-gms@portfolio:~$</span>
+      <span class="prompt">suleyman-gumus@portfolio:~$</span>
       <input type="text" id="terminalInput" class="terminal-input" autofocus>
     </div>
   </div>
@@ -380,7 +380,7 @@
   <script>
     // Data for the portfolio
     const portfolioData = {
-      name: "Suleyman GMS", // Updated name
+      name: "Suleyman GUMUS", // Updated name
       title: "Full-stack Developer", // Updated from resume
       about: "A seasoned Full-stack Developer and Designer with a decade of experience across various technologies. Proficient in crafting comprehensive web applications, backend solutions, and managing IT infrastructure. Adept at leading projects from conceptualization to deployment, ensuring high quality and client satisfaction. Specializes in scalable solutions, dynamic authorization, and integrating diverse systems.",
       skills: [
@@ -446,7 +446,7 @@
       ],
       contact: {
         email: "suleyman_gumus@outlook.com.tr", // Updated from resume
-        linkedin: "https://www.linkedin.com/in/sulaiman-gms/", // Kept from user prompt
+        linkedin: "https://www.linkedin.com/in/sulaiman-gumus/", // Kept from user prompt
         github: "https://github.com/slymnGms" // Kept from user prompt
       },
       projects: `
@@ -469,22 +469,37 @@ Featured Projects:
 
     // ASCII art for "Suleyman" in Watch Dogs style
     const suleymanAscii = `
-  _   _ _   _ _     _   _ _____ _   _
- | | | | | | | |   | | | |  ___| | | |
- | | | | | | | |   | | | | |__ | |_| |
- | | | | | | | |   | | | |  __||  _  |
- | |_| | |_| | |___| |_| | |___| | | |
-  \\\\___/ \\\\___/\\\\_____/\\\\___/\\\\____/|_| |_|
+:::::::::--=##%%%%%@@@*:::::::::
+::::::::--+=--::=+*#%@@%-:::::::
+:::::::-=+--------===+%@#:::::::
+:::::::-*-------=====+#@@=::::::
+:::::::-++##*+++====++#@@#-:::::
+::::::--=+%%*+#%##****%@%-::::::
+:::----+=++=-=++***+++%%*:::::::
+------=*=+*##%+++=+++#%+-:::::::
+------*#*#%@@%***+**#%%*-:::::::
+-----+#@@##%%%#####%@@@@@@@#-:::
++##%#%%@@@%%###%@@@@@@@@@@@@%%*-
+#%%%%%@@@@@@@@@@@@@@@@@@@@@%####
+%%%@@@@@@@@@@@@@%%@@@@@@@@%%%##%
+%@@@@@@@@@@@@%%%%@@%@@@@@%%%%%@%
+@@@@@@@@@@#*%@%%@@%@@@@@@%@@%@@%
+   _____       __                               
+  / ___/__  __/ /__  __  ______ ___  ____ _____ 
+  \\__ \\/ / / / / _ \\/ / / / __ \\__ \\/ __  \\_ / __ \\
+ ___/ / /_/ / /  __/ /_/ / / / / / / /_/ / / / /
+/____/\\__,_/_/\\___/\\__, /_/ /_/ /_/\\__,_/_/ /_/ 
+                  /____/                        
         `;
 
     // Function to append output to the terminal
-    // The addPromptPrefix parameter controls whether the 'suleyman-gms@portfolio:~$' prompt is added.
+    // The addPromptPrefix parameter controls whether the 'suleyman-gumus@portfolio:~$' prompt is added.
     // It should be true only for the echoed command, and false for the command's actual output.
     function appendOutput(message, addPromptPrefix = false) {
       const outputLine = document.createElement('div');
       if (addPromptPrefix) {
         // This branch is for echoing the user's typed command
-        outputLine.innerHTML = `<span class="prompt">suleyman-gms@portfolio:~$</span> <span class="command-output">${message}</span>`;
+        outputLine.innerHTML = `<span class="prompt">suleyman-gumus@portfolio:~$</span> <span class="command-output">${message}</span>`;
       } else {
         // This branch is for displaying the actual output of a command (like 'man' or 'cat')
         outputLine.innerHTML = `<span class="command-output">${message}</span>`;
@@ -516,13 +531,13 @@ Featured Projects:
     function displayWelcomeMessageWithTyping() {
       const ngVersionOutput = `
 <span style="color: #00ffff;">
-     _                      _                 _
-    | | __ _   _  ___    / \\   _ __ ___   __| | ___
- _  | |/ _\` | | |/ _ \\  /  _\\ | '__/ _ \\ / _\` |/ _ \\
-| |_| | (_| | | | (_) |/ /_\\ \\| | | (_) | (_| |  __/
- \\___/ \\__,_| |_|\\___/ \\_/   \\_/|_|  \\___/ \\__,_|\\___|
+   _____       __                               
+  / ___/__  __/ /__  __  ______ ___  ____ _____ 
+  \\__ \\/ / / / / _ \\/ / / / __ \\__ \\/ __ \/ __ \\
+ ___/ / /_/ / /  __/ /_/ / / / / / / /_/ / / / /
+/____/\\__,_/_/\\___/\\__, /_/ /_/ /_/\\__,_/_/ /_/ 
+                  /____/                        
 </span>
-<br>
 <span style="color: #00eaff;">System Information:</span>
 <span style="color: #00eaff;">  OS:</span> <span style="color: #00ffff;">Linux (mostly), Windows (when I have to), macOS (for design work)</span>
 <span style="color: #00eaff;">  Node:</span> <span style="color: #00ffff;">v20.11.0 (The stable one, not the bleeding edge)</span>
@@ -532,9 +547,6 @@ Featured Projects:
 <span style="color: #00eaff;">  Languages:</span> <span style="color: #00ffff;">C#, HTML/CSS, JavaScript, SQL, Typescript, PHP, Python</span>
 <span style="color: #00eaff;">  Frameworks:</span> <span style="color: #00ffff;">.Net, jQuery, .Net Core, Node.js, Angular, React, Laravel, CodeIgniter, Django, Flask</span>
 <span style="color: #00eaff;">  Databases:</span> <span style="color: #00ffff;">MSSQL, MySQL, MariaDB, MongoDB, Firebase, SQLite, PostgreSQL</span>
-<span style="color: #00eaff;">  Containerization:</span> <span style="color: #00ffff;">Docker, Kubernetes (Orchestrating digital dreams)</span>
-<span style="color: #00eaff;">  Cloud Platforms:</span> <span style="color: #00ffff;">AWS, Azure, Google Cloud (Cloud-native, but still prefers local coffee)</span>
-<span style="color: #00eaff;">  Dev Tools:</span> <span style="color: #00ffff;">Visual Studio, Git, VS Code, Postman (The usual suspects)</span>
             `;
 
       const welcomeText2Plain = "Type 'help' to see available commands."; // Plain text for typing effect
@@ -567,13 +579,13 @@ Featured Projects:
       'help': () => {
         appendOutput("Available commands:", false);
         appendOutput("  <span class='text-yellow-400'>help</span>        - Displays this help message.", false);
-        appendOutput("  <span class='text-yellow-400'>about</span>       - Learn more about Suleyman GMS.", false); // Updated name
+        appendOutput("  <span class='text-yellow-400'>about</span>       - Learn more about Suleyman GUMUS.", false); // Updated name
         appendOutput("  <span class='text-yellow-400'>skills</span>      - Lists technical skills.", false);
         appendOutput("  <span class='text-yellow-400'>experience</span>  - Shows work experience.", false);
         appendOutput("  <span class='text-yellow-400'>education</span>   - Displays educational background.", false);
         appendOutput("  <span class='text-yellow-400'>projects</span>    - Information about projects.", false);
         appendOutput("  <span class='text-yellow-400'>contact</span>     - How to get in touch.", false);
-        appendOutput("  <span class='text-yellow-400'>github</span>      - Opens Suleyman GMS's GitHub profile.", false); // Updated name
+        appendOutput("  <span class='text-yellow-400'>github</span>      - Opens Suleyman GUMUS's GitHub profile.", false); // Updated name
         appendOutput("  <span class='text-yellow-400'>whoami</span>      - Displays current user information.", false);
         appendOutput("  <span class='text-yellow-400'>ls</span>          - Lists conceptual 'files' (data).", false);
         appendOutput("  <span class='text-yellow-400'>cat &lt;filename&gt;</span> - Displays content of a 'file' (e.g., <span class='text-yellow-400'>cat skills.json</span>).", false);
@@ -657,12 +669,33 @@ Featured Projects:
         displayWelcomeMessageWithTyping(); // Redisplay welcome message after clearing
       },
       'easter': () => {
-        appendOutput("███████╗██╗  ██╗███████╗████████╗███████╗██████╗ ", false);
+        appendOutput("███████╗███████╗███████╗████████╗███████╗██████╗ ", false);
         appendOutput("██╔════╝██║  ██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗", false);
         appendOutput("█████╗  ███████║███████╗   ██║   █████╗  ██████╔╝", false);
         appendOutput("██╔══╝  ██╔══██║╚════██║   ██║   ██╔══╝  ██╔══██╗", false);
-        appendOutput("██║     ██║  ██║███████║   ██║   ███████╗██║  ██║", false);
-        appendOutput("╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝", false);
+        appendOutput("███████╗██║  ██║███████║   ██║   ███████╗██║  ██║", false);
+        appendOutput("╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝", false);
+        appendOutput(`
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⠞⣋⠉⣿⣯⣿⢿⣖⠦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠿⣶⣾⣿⣾⣿⣹⣿⣶⣿⣿⣾⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣧⣰⣿⣿⣿⣿⣿⣿⡿⠿⠿⣿⣿⡟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠟⣠⣿⠟⠋⠉⠀⠈⠀⠀⠀⠀⠘⣿⣧⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⠀⠀⠀⢀⡀⠀⠀⣀⡀⠀⣾⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⡏⠀⢻⣯⡽⢿⡄⠘⢿⡯⠵⢻⣟⡋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠼⣧⠀⠉⠀⠀⠀⠁⠀⠀⠀⠀⢨⣿⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢌⢧⣬⠇⠀⠀⠀⠸⠛⠂⠘⠆⢎⡴⣻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠉⣿⡆⠀⠀⢾⣯⢿⣗⣀⣼⣹⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠸⡟⠀⠀⠀⠟⢲⣶⠶⣿⠍⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⠰⡇⠀⠀⠀⠴⢺⣿⣤⢿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣾⣿⣿⣿⡆⢧⡀⠀⢀⣀⣼⣿⣟⡇⢿⣷⣶⣤⣄⣀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣀⣴⣶⣿⣿⣿⣿⣿⣿⣿⣷⠀⠳⣄⠀⠉⢿⣿⣿⠇⠸⣿⣿⣿⣿⣿⣿⣷⣦⣄⡀⠀
+⠀⢀⣤⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡷⠆⠙⢦⣀⣨⠗⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀
+⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣀⣠⣤⣀⣉⠀⠀⡀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆
+⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⢁⣼⠿⢿⣿⣿⣿⠲⠶⠶⠯⢤⣠⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇
+⠀⡿⣿⣿⣿⣿⣿⣿⣿⡟⣰⢹⣁⡀⠈⠙⣻⣿⣍⣉⣙⣒⣻⠓⢾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏
+⠀⣷⣾⣿⣿⣿⣿⣿⣿⠁⡇⠀⠉⡀⠙⢿⣿⣿⡧⠤⠤⠭⠭⣌⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇
+⢀⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⠀⠀⣇⣤⣾⣿⣿⣗⠒⠒⠲⣶⠦⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇`, false);
         appendOutput("You found the easter egg! Keep coding!", false);
       }
     };
