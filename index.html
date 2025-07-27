@@ -23,8 +23,125 @@
       margin: 0;
       padding: 20px;
       box-sizing: border-box;
+      overflow: hidden;
+      /* Prevent scrollbars during loading */
+
+      /* CRT Effect Styles */
+      position: relative;
+      /* Needed for pseudo-elements positioning */
+      filter: contrast(1.1) brightness(1.1);
+      /* Slightly increase contrast and brightness for CRT glow */
+      /* Optional: Add a subtle hue-rotate for color shift, e.g., filter: hue-rotate(5deg); */
     }
 
+    /* CRT Scanlines Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(#000000,
+          #000000 1px,
+          rgba(0, 234, 255, 0.05) 1px,
+          rgba(0, 234, 255, 0.05) 2px
+          /* Subtle light scanlines */
+        );
+      pointer-events: none;
+      /* Allow clicks to pass through */
+      z-index: 999;
+      /* Below loading overlay, above content */
+      opacity: 0.2;
+      /* Subtle scanline visibility */
+    }
+
+    /* CRT Screen Curvature Effect */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0) 75%,
+          rgba(0, 0, 0, 0.3) 100%
+          /* Darken edges for curvature */
+        );
+      pointer-events: none;
+      z-index: 998;
+      opacity: 1;
+    }
+
+    /* Loading Overlay Styles */
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    /* Tron Grid Animation */
+    #loadingOverlay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(to right, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      /* Adjust grid size */
+      animation: tronGrid 3s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes tronGrid {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 50px 50px;
+      }
+
+      /* Animate grid movement */
+    }
+
+    .loading-text {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        opacity: 0.7;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Terminal Container Styles */
     .terminal-container {
       background-color: #0a1a2a;
       /* Dark blue for terminal body */
@@ -42,6 +159,12 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      opacity: 0;
+      /* Initially hidden */
+      transform: scale(0.8);
+      /* Start smaller for scaling effect */
+      transition: opacity 1s ease-in, transform 1s ease-in-out;
+      /* Fade in and scale transition */
     }
 
     .terminal-header {
@@ -192,7 +315,16 @@
 </head>
 
 <body>
-  <div class="terminal-container">
+  <div id="loadingOverlay">
+    <div style="font-size: 2.5rem; text-shadow: 0 0 15px rgba(0, 255, 255, 0.9);">
+      ACCESSING GRID...
+    </div>
+    <div class="loading-text">
+      Initializing secure connection...
+    </div>
+  </div>
+
+  <div id="terminalContainer" class="terminal-container">
     <div class="terminal-header">
       <div class="dot red"></div>
       <div class="dot yellow"></div>
@@ -254,6 +386,8 @@
 
     const terminalOutput = document.getElementById('terminalOutput');
     const terminalInput = document.getElementById('terminalInput');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const terminalContainer = document.getElementById('terminalContainer');
 
     // ASCII art for "Süleyman"
     const suleymanAscii = `
@@ -281,8 +415,27 @@
       terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll to bottom
     }
 
-    // Function to display initial welcome messages
-    function displayWelcomeMessage() {
+    // Typewriter effect function for plain text
+    // targetElement: The DOM element to type into
+    // text: The plain string to type
+    // speed: Typing speed in milliseconds per character
+    // callback: Function to call after typing is complete
+    function typeWriter(targetElement, text, speed, callback) {
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          targetElement.textContent += text.charAt(i); // Use textContent for plain text
+          terminalOutput.scrollTop = terminalOutput.scrollHeight; // Keep scrolling
+          i++;
+        } else {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, speed);
+    }
+
+    // Function to display initial welcome messages with typing effect
+    function displayWelcomeMessageWithTyping() {
       const asciiArt = `
 ███████╗██╗   ██╗██╗      █████╗ ███╗   ███╗ █████╗ ███╗   ███╗
 ██╔════╝██║   ██║██║     ██╔══██╗████╗ ████║██╔══██╗████╗ ████║
@@ -291,11 +444,33 @@
 ███████║╚██████╔╝███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║██║
 ╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
             `;
-      // Using a specific Tron blue for the ASCII art
-      appendOutput(`<pre style="color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);">${asciiArt}</pre>`, false);
-      appendOutput("Welcome to Süleyman GMS's interactive terminal portfolio.", false); // Updated name
-      appendOutput("Type '<span class='text-yellow-400'>help</span>' to see available commands.", false);
-      appendOutput("", false); // Add an empty line for spacing
+      const welcomeText1 = "Welcome to Süleyman GMS's interactive terminal portfolio.";
+      const welcomeText2Html = "Type '<span class='text-yellow-400'>help</span>' to see available commands."; // This line contains HTML
+
+      // Type ASCII art
+      const asciiLineDiv = document.createElement('div');
+      const asciiPre = document.createElement('pre');
+      asciiPre.style.color = '#00ffff';
+      asciiPre.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
+      asciiLineDiv.appendChild(asciiPre);
+      terminalOutput.appendChild(asciiLineDiv);
+
+      typeWriter(asciiPre, asciiArt, 10, () => {
+        // After ASCII art, type the first welcome message
+        const welcomeLine1Div = document.createElement('div');
+        const welcomeLine1Span = document.createElement('span');
+        welcomeLine1Span.classList.add('command-output');
+        welcomeLine1Div.appendChild(welcomeLine1Span);
+        terminalOutput.appendChild(welcomeLine1Div);
+        typeWriter(welcomeLine1Span, welcomeText1, 30, () => {
+          // After first welcome message, append the second (with HTML) directly
+          const welcomeLine2Div = document.createElement('div');
+          welcomeLine2Div.innerHTML = `<span class="command-output">${welcomeText2Html}</span>`;
+          terminalOutput.appendChild(welcomeLine2Div);
+          terminalOutput.scrollTop = terminalOutput.scrollHeight; // Scroll to bottom
+          appendOutput("", false); // Add a final empty line for spacing
+        });
+      });
     }
 
 
@@ -391,7 +566,7 @@
       },
       'clear': () => {
         terminalOutput.innerHTML = ''; // Clear all content
-        displayWelcomeMessage(); // Redisplay welcome message after clearing
+        displayWelcomeMessageWithTyping(); // Redisplay welcome message after clearing
       },
       'easter': () => {
         appendOutput("███████╗██╗  ██╗███████╗████████╗███████╗██████╗ ", false);
@@ -424,19 +599,42 @@
         } else if (command) { // If command is not empty but not recognized
           appendOutput(`Command not found: ${command}. Type '<span class='text-yellow-400'>help</span>' for a list of commands.`, false);
         }
-        terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll again
+        terminalOutput.scrollTop = terminalOutput.scrollTop; // Auto-scroll again
       }
     });
 
-    // Focus on the input field when the page loads
+    // Initial loading sequence
     window.onload = function () {
-      displayWelcomeMessage(); // Call the new function to display welcome messages
-      terminalInput.focus();
+      // Initial state: loading overlay visible, terminal hidden and scaled down
+      terminalContainer.style.opacity = '0';
+      terminalContainer.style.transform = 'scale(0.8)'; // Start slightly smaller
+      terminalContainer.style.display = 'flex'; // Ensure it's flex for layout, but hidden by opacity
+
+      // 1. Simulate loading time
+      setTimeout(() => {
+        loadingOverlay.style.opacity = '0'; // Fade out loading overlay
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none'; // Hide loading overlay completely
+
+          // 2. Fade in terminal and start scaling
+          terminalContainer.style.opacity = '1';
+          terminalContainer.style.transform = 'scale(1)'; // Scale to normal size
+
+          // 3. After scaling transition, start typing effect
+          // The scaling transition duration is 1s (from CSS transition property)
+          setTimeout(() => {
+            displayWelcomeMessageWithTyping(); // Call the typing function
+            terminalInput.focus(); // Focus input after typing
+          }, 1000); // Wait for the scale transition to complete (1 second)
+
+        }, 1000); // Wait for loading overlay to fade out (1 second)
+      }, 3000); // Display loading screen for 3 seconds
     };
 
     // Re-focus on input if user clicks anywhere else
     document.addEventListener('click', function (e) {
-      if (!terminalInput.contains(e.target) && !terminalOutput.contains(e.target)) {
+      // Only re-focus if loading is complete and the click is outside terminal input/output
+      if (loadingOverlay.style.display === 'none' && !terminalInput.contains(e.target) && !terminalOutput.contains(e.target)) {
         terminalInput.focus();
       }
     });
