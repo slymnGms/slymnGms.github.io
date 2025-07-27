@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Süleyman GÜMÜŞ - Terminal Portfolio</title>
+  <title>Suleyman GMS - Terminal Portfolio</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -380,7 +380,7 @@
   <script>
     // Data for the portfolio
     const portfolioData = {
-      name: "Süleyman GÜMÜŞ", // Updated from resume
+      name: "Suleyman GMS", // Updated name
       title: "Full-stack Developer", // Updated from resume
       about: "A seasoned Full-stack Developer and Designer with a decade of experience across various technologies. Proficient in crafting comprehensive web applications, backend solutions, and managing IT infrastructure. Adept at leading projects from conceptualization to deployment, ensuring high quality and client satisfaction. Specializes in scalable solutions, dynamic authorization, and integrating diverse systems.",
       skills: [
@@ -467,14 +467,14 @@ Featured Projects:
     const loadingOverlay = document.getElementById('loadingOverlay');
     const terminalContainer = document.getElementById('terminalContainer');
 
-    // ASCII art for "Süleyman"
+    // ASCII art for "Suleyman" in Watch Dogs style
     const suleymanAscii = `
- ____               _                     _
-/ ___| _   _  ___  | | __  ___   _ __ ___| |__   __ _ _ __
-\\___ \\| | | |/ _ \\ | |/ / / _ \\ | '__/ __| '_ \\ / _\` | '__|
- ___) | |_| | (_) ||   < | (_) || | | (__| | | | (_| | |
-|____/ \\__, |\\___/ |_|\\_\\ \\___/ |_|  \\___|_| |_|\\__,_|_|
-       |___/
+  _   _ _   _ _     _   _ _____ _   _
+ | | | | | | | |   | | | |  ___| | | |
+ | | | | | | | |   | | | | |__ | |_| |
+ | | | | | | | |   | | | |  __||  _  |
+ | |_| | |_| | |___| |_| | |___| | | |
+  \\\\___/ \\\\___/\\\\_____/\\\\___/\\\\____/|_| |_|
         `;
 
     // Function to append output to the terminal
@@ -514,40 +514,50 @@ Featured Projects:
 
     // Function to display initial welcome messages with typing effect
     function displayWelcomeMessageWithTyping() {
-      const asciiArt = `
-███████╗██╗   ██╗██╗      █████╗ ███╗   ███╗ █████╗ ███╗   ███╗
-██╔════╝██║   ██║██║     ██╔══██╗████╗ ████║██╔══██╗████╗ ████║
-███████╗██║   ██║██║     ███████║██╔████╔██║███████║██╔████╔██║
-╚════██║██║   ██║██║     ██╔══██║██║╚██╔╝██║██╔══██║██║╚██╔╝██║
-███████║╚██████╔╝███████╗██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║██║
-╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
+      const ngVersionOutput = `
+<span style="color: #00ffff;">
+     _                      _                 _
+    | | __ _   _  ___    / \\   _ __ ___   __| | ___
+ _  | |/ _\` | | |/ _ \\  /  _\\ | '__/ _ \\ / _\` |/ _ \\
+| |_| | (_| | | | (_) |/ /_\\ \\| | | (_) | (_| |  __/
+ \\___/ \\__,_| |_|\\___/ \\_/   \\_/|_|  \\___/ \\__,_|\\___|
+</span>
+<br>
+<span style="color: #00eaff;">System Information:</span>
+<span style="color: #00eaff;">  OS:</span> <span style="color: #00ffff;">Linux (mostly), Windows (when I have to), macOS (for design work)</span>
+<span style="color: #00eaff;">  Node:</span> <span style="color: #00ffff;">v20.11.0 (The stable one, not the bleeding edge)</span>
+<span style="color: #00eaff;">  Package Manager:</span> <span style="color: #00ffff;">npm 10.2.4 (Because it just works)</span>
+
+<span style="color: #00eaff;">Developer Stack:</span>
+<span style="color: #00eaff;">  Languages:</span> <span style="color: #00ffff;">C#, HTML/CSS, JavaScript, SQL, Typescript, PHP, Python</span>
+<span style="color: #00eaff;">  Frameworks:</span> <span style="color: #00ffff;">.Net, jQuery, .Net Core, Node.js, Angular, React, Laravel, CodeIgniter, Django, Flask</span>
+<span style="color: #00eaff;">  Databases:</span> <span style="color: #00ffff;">MSSQL, MySQL, MariaDB, MongoDB, Firebase, SQLite, PostgreSQL</span>
+<span style="color: #00eaff;">  Containerization:</span> <span style="color: #00ffff;">Docker, Kubernetes (Orchestrating digital dreams)</span>
+<span style="color: #00eaff;">  Cloud Platforms:</span> <span style="color: #00ffff;">AWS, Azure, Google Cloud (Cloud-native, but still prefers local coffee)</span>
+<span style="color: #00eaff;">  Dev Tools:</span> <span style="color: #00ffff;">Visual Studio, Git, VS Code, Postman (The usual suspects)</span>
             `;
-      const welcomeText1 = "Welcome to Süleyman GÜMÜŞ's interactive terminal portfolio."; // Updated name
-      const welcomeText2Html = "Type '<span class='text-yellow-400'>help</span>' to see available commands."; // This line contains HTML
 
-      // Type ASCII art
-      const asciiLineDiv = document.createElement('div');
-      const asciiPre = document.createElement('pre');
-      asciiPre.style.color = '#00ffff';
-      asciiPre.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.7)';
-      asciiLineDiv.appendChild(asciiPre);
-      terminalOutput.appendChild(asciiLineDiv);
+      const welcomeText2Plain = "Type 'help' to see available commands."; // Plain text for typing effect
+      const welcomeText2Html = "Type '<span class='text-yellow-400'>help</span>' to see available commands."; // HTML version for final display
 
-      typeWriter(asciiPre, asciiArt, 10, () => {
-        // After ASCII art, type the first welcome message
-        const welcomeLine1Div = document.createElement('div');
-        const welcomeLine1Span = document.createElement('span');
-        welcomeLine1Span.classList.add('command-output');
-        welcomeLine1Div.appendChild(welcomeLine1Span);
-        terminalOutput.appendChild(welcomeLine1Div);
-        typeWriter(welcomeLine1Span, welcomeText1, 30, () => {
-          // After first welcome message, append the second (with HTML) directly
-          const welcomeLine2Div = document.createElement('div');
-          welcomeLine2Div.innerHTML = `<span class="command-output">${welcomeText2Html}</span>`;
-          terminalOutput.appendChild(welcomeLine2Div);
-          terminalOutput.scrollTop = terminalOutput.scrollHeight; // Scroll to bottom
-          appendOutput("", false); // Add a final empty line for spacing
-        });
+      // Append the ngVersionOutput HTML directly and instantly
+      const ngVersionDiv = document.createElement('div');
+      ngVersionDiv.innerHTML = ngVersionOutput;
+      terminalOutput.appendChild(ngVersionDiv);
+      terminalOutput.scrollTop = terminalOutput.scrollHeight; // Scroll to bottom immediately after adding
+
+      // After ngVersionOutput is displayed, type the help message
+      const welcomeLine2Div = document.createElement('div');
+      const welcomeLine2Span = document.createElement('span');
+      welcomeLine2Span.classList.add('command-output');
+      welcomeLine2Div.appendChild(welcomeLine2Span);
+      terminalOutput.appendChild(welcomeLine2Div);
+
+      // Type the plain text, then replace with HTML version
+      typeWriter(welcomeLine2Span, welcomeText2Plain, 30, () => {
+        welcomeLine2Span.innerHTML = welcomeText2Html; // Replace with HTML version after typing
+        terminalOutput.scrollTop = terminalOutput.scrollHeight; // Scroll to bottom
+        appendOutput("", false); // Add a final empty line for spacing
       });
     }
 
@@ -557,13 +567,13 @@ Featured Projects:
       'help': () => {
         appendOutput("Available commands:", false);
         appendOutput("  <span class='text-yellow-400'>help</span>        - Displays this help message.", false);
-        appendOutput("  <span class='text-yellow-400'>about</span>       - Learn more about Süleyman GÜMÜŞ.", false); // Updated name
+        appendOutput("  <span class='text-yellow-400'>about</span>       - Learn more about Suleyman GMS.", false); // Updated name
         appendOutput("  <span class='text-yellow-400'>skills</span>      - Lists technical skills.", false);
         appendOutput("  <span class='text-yellow-400'>experience</span>  - Shows work experience.", false);
         appendOutput("  <span class='text-yellow-400'>education</span>   - Displays educational background.", false);
         appendOutput("  <span class='text-yellow-400'>projects</span>    - Information about projects.", false);
         appendOutput("  <span class='text-yellow-400'>contact</span>     - How to get in touch.", false);
-        appendOutput("  <span class='text-yellow-400'>github</span>      - Opens Süleyman GÜMÜŞ's GitHub profile.", false); // Updated name
+        appendOutput("  <span class='text-yellow-400'>github</span>      - Opens Suleyman GMS's GitHub profile.", false); // Updated name
         appendOutput("  <span class='text-yellow-400'>whoami</span>      - Displays current user information.", false);
         appendOutput("  <span class='text-yellow-400'>ls</span>          - Lists conceptual 'files' (data).", false);
         appendOutput("  <span class='text-yellow-400'>cat &lt;filename&gt;</span> - Displays content of a 'file' (e.g., <span class='text-yellow-400'>cat skills.json</span>).", false);
@@ -604,7 +614,7 @@ Featured Projects:
         window.open(portfolioData.contact.github, '_blank');
       },
       'whoami': () => {
-        // Display ASCII art for Süleyman and then the title
+        // Display ASCII art for Suleyman and then the title
         appendOutput(`<pre style="color: #00ffff; text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);">${suleymanAscii}</pre>`, false);
         appendOutput(`${portfolioData.title}`, false);
       },
