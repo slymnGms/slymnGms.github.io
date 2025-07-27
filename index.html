@@ -29,9 +29,10 @@
       /* CRT Effect Styles */
       position: relative;
       /* Needed for pseudo-elements positioning */
-      filter: contrast(1.1) brightness(1.1);
-      /* Slightly increase contrast and brightness for CRT glow */
-      /* Optional: Add a subtle hue-rotate for color shift, e.g., filter: hue-rotate(5deg); */
+      filter: contrast(1.2) brightness(1.2) saturate(1.1);
+      /* Enhanced contrast, brightness, saturation for CRT glow */
+      animation: crt-flicker 0.2s infinite alternate;
+      /* Subtle flicker animation */
     }
 
     /* CRT Scanlines Effect */
@@ -44,16 +45,17 @@
       height: 100%;
       background: repeating-linear-gradient(#000000,
           #000000 1px,
-          rgba(0, 234, 255, 0.05) 1px,
-          rgba(0, 234, 255, 0.05) 2px
-          /* Subtle light scanlines */
+          rgba(0, 234, 255, 0.1) 1px,
+          /* Increased intensity */
+          rgba(0, 234, 255, 0.1) 3px
+          /* Thicker scanlines */
         );
       pointer-events: none;
       /* Allow clicks to pass through */
       z-index: 999;
       /* Below loading overlay, above content */
-      opacity: 0.2;
-      /* Subtle scanline visibility */
+      opacity: 0.3;
+      /* Increased visibility */
     }
 
     /* CRT Screen Curvature Effect */
@@ -66,13 +68,44 @@
       height: 100%;
       background: radial-gradient(ellipse at center,
           rgba(0, 0, 0, 0) 0%,
-          rgba(0, 0, 0, 0) 75%,
-          rgba(0, 0, 0, 0.3) 100%
-          /* Darken edges for curvature */
+          rgba(0, 0, 0, 0) 65%,
+          /* Make curvature start earlier */
+          rgba(0, 0, 0, 0.5) 100%
+          /* Darken edges more */
         );
       pointer-events: none;
       z-index: 998;
       opacity: 1;
+      animation: crt-static 0.5s steps(10) infinite;
+      /* Subtle static/noise effect */
+    }
+
+    /* New Keyframes for CRT Flicker and Static */
+    @keyframes crt-flicker {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.98;
+      }
+
+      /* Very subtle opacity change */
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes crt-static {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 100% 100%;
+      }
+
+      /* Simulate random static */
     }
 
     /* Loading Overlay Styles */
@@ -219,15 +252,17 @@
       line-height: 1.5;
       color: #00eaff;
       /* Tron blue/cyan for general output */
-      text-shadow: 0 0 5px rgba(0, 234, 255, 0.3);
-      /* Subtle text glow */
+      filter: blur(0.2px);
+      /* Very subtle blur for CRT fuzziness */
+      text-shadow: 0 0 8px rgba(0, 234, 255, 0.8), 0 0 15px rgba(0, 234, 255, 0.5);
+      /* Stronger glow */
     }
 
     .terminal-output .prompt {
       color: #00ffff;
       /* Brighter Tron blue for prompt */
-      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
-      /* Stronger glow for prompt */
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7);
+      /* Even stronger glow */
     }
 
     .terminal-output .command-output {
@@ -248,8 +283,8 @@
       margin-right: 0.5rem;
       flex-shrink: 0;
       /* Prevent prompt from shrinking */
-      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
-      /* Stronger glow for prompt */
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.7);
+      /* Even stronger glow */
     }
 
     .terminal-input {
@@ -261,8 +296,10 @@
       flex-grow: 1;
       font-family: 'Inter', monospace;
       font-size: 0.95rem;
-      text-shadow: 0 0 5px rgba(0, 234, 255, 0.3);
-      /* Subtle text glow */
+      filter: blur(0.2px);
+      /* Apply blur to input as well */
+      text-shadow: 0 0 8px rgba(0, 234, 255, 0.8), 0 0 15px rgba(0, 234, 255, 0.5);
+      /* Stronger glow */
       caret-color: #00ffff;
       /* Tron blue cursor */
     }
@@ -599,7 +636,7 @@
         } else if (command) { // If command is not empty but not recognized
           appendOutput(`Command not found: ${command}. Type '<span class='text-yellow-400'>help</span>' for a list of commands.`, false);
         }
-        terminalOutput.scrollTop = terminalOutput.scrollTop; // Auto-scroll again
+        terminalOutput.scrollTop = terminalOutput.scrollHeight; // Auto-scroll to bottom
       }
     });
 
